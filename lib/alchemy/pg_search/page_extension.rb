@@ -18,6 +18,11 @@ Alchemy::Page.class_eval do
       tsearch: {prefix: true}
     }
 
+  has_many :descendent_contents,
+    through: :descendent_elements,
+    class_name: 'Alchemy::Content',
+    source: :contents
+
   has_many :searchable_essence_texts,
     -> { where(searchable: true, alchemy_elements: {public: true}) },
     class_name: 'Alchemy::EssenceText',
