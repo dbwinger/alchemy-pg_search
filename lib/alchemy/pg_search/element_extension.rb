@@ -3,30 +3,30 @@ Alchemy::Element.class_eval do
 
   pg_search_scope :full_text_search,
     associated_against: {
-      searchable_essence_texts:     :body,
-      searchable_essence_richtexts: :stripped_body,
-      searchable_essence_pictures:  :caption
+      essence_texts:     :body,
+      essence_richtexts: :stripped_body,
+      essence_pictures:  :caption
     },
     using: {
       tsearch: {prefix: true}
     }
 
-  has_many :searchable_essence_texts,
-    -> { joins(:essence_texts).where(alchemy_essence_texts: { searchable: true }, alchemy_elements: {public: true}) },
+  has_many :essence_texts,
+    -> { where(alchemy_elements: {public: true}) },
     class_name: 'Alchemy::EssenceText',
     source_type: 'Alchemy::EssenceText',
     through: :contents,
     source: :essence
 
-  has_many :searchable_essence_richtexts,
-    -> { joins(:essence_richtexts).where(alchemy_essence_richtexts: { searchable: true }, alchemy_elements: {public: true}) },
+  has_many :essence_richtexts,
+    -> { where(alchemy_elements: {public: true}) },
     class_name: 'Alchemy::EssenceRichtext',
     source_type: 'Alchemy::EssenceRichtext',
     through: :contents,
     source: :essence
 
-  has_many :searchable_essence_pictures,
-    -> { joins(:essence_pictures).where(alchemy_essence_pictures: { searchable: true }, alchemy_elements: {public: true}) },
+  has_many :essence_pictures,
+    -> { where(alchemy_elements: {public: true}) },
     class_name: 'Alchemy::EssencePicture',
     source_type: 'Alchemy::EssencePicture',
     through: :contents,
