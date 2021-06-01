@@ -19,7 +19,7 @@ Alchemy::Page.class_eval do
 		}
 
 	has_many :descendent_elements,
-		-> { order(:position).unfixed.not_trashed },
+		-> { order(:position).unfixed.available },
 		class_name: 'Alchemy::Element'
 				
 	has_many :descendent_contents,
